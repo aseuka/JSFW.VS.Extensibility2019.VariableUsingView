@@ -22,9 +22,8 @@
 - vs 선택라인 외곽선 색상 설정
 ![image](https://user-images.githubusercontent.com/116536524/198202283-2c157ce8-7a42-4b00-b262-3fdcb3bf40fc.png)
 
-
-
-
+- C# 문자열 파싱 처리 데모 :: 디버깅용
+[Demo_CSReSearch.zip](https://github.com/aseuka/JSFW.VS.Extensibility2019.VariableUsingView/files/9883722/Demo_CSReSearch.zip)
 
 
 
