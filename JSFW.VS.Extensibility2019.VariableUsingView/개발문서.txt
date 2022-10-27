@@ -1,0 +1,109 @@
+﻿2022-03-16
+	* 선택 텍스트 라인 강조
+		: 도구 > 옵션
+			- 환경 > 글꼴 및 색
+				표시항목 : "현재 줄 강조 표시" 의 항목전경 색을 바꾸면 해당 색으로 소스 텍스트창에서 선택행 테투리가 변경됨.
+			
+2020-06-06 
+	* VB.NET 기능 추가 ( 기존 C#만 지원하던것을 VB.NET 을 추가<큐브코아>)
+	* 로슬린을 이용하여 파싱을 처리.
+		!! vsix에 nuget으로 VB.NET 로슬린 분석관련 dll을 추가했으나 빌드 후 반영이 안되어 애먹었음. 
+			>> source.extension.vsixmanifest 에서 Asset에서 dll을 직접 추가해줌. 
+				Microsoft.CodeAnalysis.dll
+				Microsoft.CodeAnalysis.VisualBasic.dll
+
+			>> 관련 dll은 nuget으로 설치기 추가되어 빌드 배포후에도 따라옴. 
+	     !! 주의 : Nuget을 이것 저것 설치해보면서 테스트 한 것이므로 dll이 제대로 안따라 올 수 있으며, 이때는 Asset에서 직접 추가하면 빌드 후 실행할때 따라오는 것을 볼 수 있음. 
+				>> 디버그 할때 dll이 배포되는 곳은 : 
+					C:\Users\{사용자계정}\AppData\Local\Microsoft\VisualStudio\16.0_8f3db510Exp\Extensions\지송닷넷\JSFW.VS.Extensibility2019.VariableUsingView\1.0\
+					안되는 경우 폴더에 빌드할때 다른 파일들은 다 있는데 Microsoft.CodeAnalysis.dll, Microsoft.CodeAnalysis.VisualBasic.dll 두개가 없어서 직접 복사해서 넣어주니 정상동작.
+					그래서 asset으로 dll을 등록하니 자동으로 생성되는 것을 확인하였음. 
+
+ VB는 로슬린을 이용하여 변수의 사용이 있는 소스코드위치를 기준으로 감싸고 있는 if ~ elseif ~ end 블럭, for ~ next블럭, select ~ end블럭, foreach ~ next블럭, using ~ end블럭, with ~ end블럭, sub ~ end, function ~ end, class ~ end 등...
+을 찾아내어 해당 행들을 뽑아내어 표시 함.
+
+ C#은 소스자체를 모두 뒤져서 해당되는 단어를 찾고, 주석에 포함되면 빼고, 문법내에 구문속에 포함되어 있으면 살려내는 식으로 탐색하는 형태로 작업이 되어 있음. 
+
+최종적으로 보여지는 부분도 다르고, 해당 소스라인으로 찾아가는 부분도 다름. 
+
+2022-10-27
+	* CS 변수찾는 부분이 이상한 현상이 있어서 수정. 
+		if {} else {} 연속적으로 있을때 해당 변수를 찾았던 if {} else {}가 아닌 것도 찾은 것으로 나오기도 하고... 
+		또 소스 1라인에 변수명 문자열이 있냐 없냐만 판별해서 동일 단어가 다 튀어나와서... 자름!!!
+
+        - {!영어, !_, !숫자}{변수명}{!영어, !_, !숫자}
+
+
+		// 변수명으로 인식하는 문자로써 '_'를 포함하였음.
+        // 변수_  <-- 처럼 변수로 사용이 가능하므로 체크대상임. 
+        string alphabet = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ_";
+        string numbers = "0123456789";
+
+        private bool CheckWord(string trimText, string sw)
+        {
+            //trimText에서 sw 키워드가 단어로 있는지 체크
+            // {(숫자|문자)}{sw}(숫자|문자)
+            bool isMatch = false;
+            int idx = 0;
+
+            do
+            {
+                int findIdx = trimText.IndexOf(sw, idx);
+                if (0 < findIdx)
+                {
+                    if (!char.IsLetterOrDigit(trimText[findIdx - 1]) &&
+                        !alphabet.Contains(trimText[findIdx - 1]) &&
+                        !numbers.Contains(trimText[findIdx - 1]))
+                    {
+                        if ((findIdx + sw.Length) < trimText.Length &&
+                            !alphabats.Contains(trimText[findIdx + sw.Length]) &&
+                            !numbers.Contains(trimText[findIdx + sw.Length]))
+                        {
+                            isMatch = true;
+                            break;
+                        }
+                    }
+                    idx = findIdx + sw.Length + 1;
+                }
+                else
+                {
+                    if (0 == findIdx)
+                    {
+                        if ((findIdx + sw.Length) < trimText.Length &&
+                                !alphabet.Contains(trimText[findIdx + sw.Length]) &&
+                                !numbers.Contains(trimText[findIdx + sw.Length]))
+                        {
+                            isMatch = true;
+                            break;
+                        }
+                    }
+                    //-1 못찾으면!
+                    break;
+                }
+            } while (idx < trimText.Length);
+            return isMatch;
+        }
+
+
+
+
+ 
+
+* 아발론 리치텍스트박스 하이라이트 컬러지원 목록
+[ 0] "XmlDoc"
+[ 1] "C#"
+[ 2] "JavaScript"
+[ 3] "HTML"
+[ 4] "ASP/XHTML"
+[ 5] "Boo"
+[ 6] "Coco"
+[ 7] "CSS"
+[ 8] "C++"
+[ 9] "Java"
+[10] "Patch"
+[11] "PowerShell"
+[12] "PHP"
+[13] "TeX"
+[14] "VBNET"
+[15] "XML"
+[16] "MarkDown"
