@@ -1372,9 +1372,10 @@ namespace JSFW.VS.Extensibility.Cmds
                         !alphabet.Contains(trimText[findIdx - 1]) &&
                         !numbers.Contains(trimText[findIdx - 1]))
                     {
-                        if ((findIdx + sw.Length) < trimText.Length &&
+                        if (((findIdx + sw.Length) == trimText.Length ) || // 마지막 단어가 찾는 문자와 일치할때
+                            ((findIdx + sw.Length) < trimText.Length &&    // 현재 찾은 시작위치와 글자수 사이에 있을때 ( && 알파벳이 아니거나, 숫자가 아니거나.. )
                             !alphabet.Contains(trimText[findIdx + sw.Length]) &&
-                            !numbers.Contains(trimText[findIdx + sw.Length]))
+                            !numbers.Contains(trimText[findIdx + sw.Length])))
                         {
                             isMatch = true;
                             break;
