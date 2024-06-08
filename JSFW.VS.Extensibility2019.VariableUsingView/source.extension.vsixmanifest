@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <PackageManifest Version="2.0.0" xmlns="http://schemas.microsoft.com/developer/vsx-schema/2011" xmlns:d="http://schemas.microsoft.com/developer/vsx-schema-design/2011">
     <Metadata>
-        <Identity Id="JSFW.VS.Extensibility2019.VariableUsingView.807eb5bb-26b8-4ec7-9c11-95149f035a4d" Version="2.0" Language="ko-KR" Publisher="지송닷넷" />
+        <Identity Id="JSFW.VS.Extensibility2019.VariableUsingView.807eb5bb-26b8-4ec7-9c11-95149f035a4d" Version="2.1" Language="ko-KR" Publisher="지송닷넷" />
         <DisplayName>JSFW.VS.Extensibility2019.VariableUsingView</DisplayName>
         <Description xml:space="preserve">vs2022로 변경
 </Description>
